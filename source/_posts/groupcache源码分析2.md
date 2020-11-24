@@ -9,27 +9,27 @@ groupcachepb打开后我们可以看到.proto文件和.pb.go文件，这玩意�
 <!-- more -->
 
 1. 协议版本和包名。
-```
+``` go
 syntax = "proto2";
 
 package groupcachepb;
 ```
 2. 请求消息结构，两个字符串，分别为group和key，必须字段。
-```
+``` go
 message GetRequest {
   required string group = 1;
   required string key = 2;
 }
 ```
 3. 回复消息结构，[]byte和double类型，可选字段。
-```
+``` go
 message GetResponse {
   optional bytes value = 1;
   optional double minute_qps = 2;
 }
 ```
 4. rpc服务定义，但是我貌似没有在代码中看到使用rpc的地方。
-```
+``` go
 service GroupCache {
   rpc Get(GetRequest) returns (GetResponse) {
   };

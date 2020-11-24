@@ -21,11 +21,11 @@ consistenthash.go文件主要是提供一个Map数据结构，它基于一致性
 
 ### 代码分析
 1. Hash定义了一个函数类型，接受[]byte返回uint32，他表示我们选择哈希运算方法类型。
-```
+``` go
 type Hash func(data []byte) uint32
 ```
 2. Map是一个数据结构，用来保存hash后的结点。
-```
+``` go
 type Map struct {
 	hash     Hash //哈希算法类型
 	replicas int //每个机器的虚拟结点数
@@ -34,7 +34,7 @@ type Map struct {
 }
 ```
 3. 初始化方法，返回一个Map数据结构。
-```
+``` go
 func New(replicas int, fn Hash) *Map {
 	m := &Map{
 		replicas: replicas,
@@ -48,13 +48,13 @@ func New(replicas int, fn Hash) *Map {
 }
 ```
 4. 判断Map是否为空。
-```
+``` go
 func (m *Map) IsEmpty() bool {
 	return len(m.keys) == 0
 }
 ```
 5. 将机器结点添加到Map中。
-```
+``` go
 func (m *Map) Add(keys ...string) {
 	for _, key := range keys {
 		for i := 0; i < m.replicas; i++ { //生成虚拟结点
@@ -67,7 +67,7 @@ func (m *Map) Add(keys ...string) {
 }
 ```
 6. 获取结点机器的方法。
-```
+``` go
 func (m *Map) Get(key string) string {
 	if m.IsEmpty() { //非空判断
 		return ""

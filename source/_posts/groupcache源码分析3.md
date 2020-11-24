@@ -9,7 +9,7 @@ LRU算法全称Least Recently Used ，最近最少使用，当数据所占内存
 <!-- more -->
 
 1. 定义了一个缓存结构体，MaxEntries表示缓存的数量上限，值为0不限制。OnEvicted是一个func类型，当缓存被淘汰时被调用。ll是一个双向链表指针，链表两头分别为最新和最旧的数据。cache是一个map，k是缓存名，v是链表中元素指针。
-```
+``` go
 type Cache struct {
 	MaxEntries int
 	OnEvicted func(key Key, value interface{})
@@ -18,7 +18,7 @@ type Cache struct {
 }
 ```
 2. Key是定义的类型，可包含任何对象。entry结构体，缓存的单位。
-```
+``` go
 type Key interface{}
 
 type entry struct {
@@ -27,7 +27,7 @@ type entry struct {
 }
 ```
 3. 初始化方法，创建一个lru缓存。
-```
+``` go
 func New(maxEntries int) *Cache {
 	return &Cache{
 		MaxEntries: maxEntries,
@@ -37,7 +37,7 @@ func New(maxEntries int) *Cache {
 }
 ```
 4. 添加方法，先惰性加载cache和ll属性，虽然new的时候会创建他俩，但是若执行clear方法会把这两个属性又置为了nil，所以这里要判断。然后判断新加的key是否已经存在，若存在将其移到ll的最前方，并返回value。否则，创建entry，将其加入ll的最前方，cache保存其在ll中的元素指针。开启了缓存限制，并且ll大小已超，调用RemoveOldest方法。
-```
+``` go
 func (c *Cache) Add(key Key, value interface{}) {
 	if c.cache == nil {
 		c.cache = make(map[interface{}]*list.Element)
@@ -56,7 +56,7 @@ func (c *Cache) Add(key Key, value interface{}) {
 }
 ```
 5. 获取缓存，cache不存在，直接返回空。若key存在，获取其值，将其移到ll最前方。
-```
+``` go
 func (c *Cache) Get(key Key) (value interface{}, ok bool) {
 	if c.cache == nil {
 		return
@@ -69,7 +69,7 @@ func (c *Cache) Get(key Key) (value interface{}, ok bool) {
 }
 ```
 6. removeElement，移除一个单位，分别从ll和cache中移除，若定义了OnEvicted，调用该方法。Remove包装了removeElement，为实际对外使用的方法名。RemoveOldest，获取ll最后一个元素，将其删除。
-```
+``` go
 func (c *Cache) Remove(key Key) {
 	if c.cache == nil {
 		return
@@ -99,7 +99,7 @@ func (c *Cache) removeElement(e *list.Element) {
 }
 ```
 7. 获取缓存的总数。
-```
+``` go
 func (c *Cache) Len() int {
 	if c.cache == nil {
 		return 0
@@ -108,7 +108,7 @@ func (c *Cache) Len() int {
 }
 ```
 8. 清理所有缓存，OnEvicted不为nil，遍历元素执行回调，然后将ll和cache置为nil，因为这个缘故所以在Add方法最开始有一个惰性加载。
-```
+``` go
 func (c *Cache) Clear() {
 	if c.OnEvicted != nil {
 		for _, e := range c.cache {
