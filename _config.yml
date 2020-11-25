@@ -106,3 +106,10 @@ deploy:
   type: 'git'
   repo: https://github.com/ericluj/ericluj.github.io.git
   branch: master
+
+# 本地搜索
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 100
