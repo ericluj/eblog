@@ -2,6 +2,9 @@
 title: groupcache源码分析2:groupcachepb
 date: 2020-03-10 22:23:33
 tags: groupcache
+categories: 
+- go
+- groupcache
 ---
 
 groupcachepb打开后我们可以看到.proto文件和.pb.go文件，这玩意儿我们很熟悉，protobuf协议嘛，我们只需要关注.proto即可，.pb.go是基于他生成，关于protobuf的具体内容不详述，大家知道他是一个用来进行通信的协议即可。

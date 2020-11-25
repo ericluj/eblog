@@ -1,7 +1,10 @@
 ---
 title: groupcache源码分析3:lru.go
 date: 2020-03-11 22:25:06
-tags:
+tags: groupcache
+categories: 
+- go
+- groupcache
 ---
 
 LRU算法全称Least Recently Used ，最近最少使用，当数据所占内存达到一定阈值，我们要移除掉最近最少使用的数据。

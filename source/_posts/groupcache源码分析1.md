@@ -2,6 +2,9 @@
 title: groupcache源码分析1:consistenthash.go
 date: 2020-03-09 22:21:58
 tags: groupcache
+categories: 
+- go
+- groupcache
 ---
 
 consistenthash.go文件主要是提供一个Map数据结构，它基于一致性哈希算法，来达到根据缓存的key名，去寻找对应服务器结点的作用。
