@@ -1,5 +1,5 @@
 ---
-title: groupcache源码分析6
+title: groupcache源码分析6:sink.go
 date: 2020-03-21 21:33:20
 tags: groupcache
 categories: 
