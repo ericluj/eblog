@@ -14,7 +14,7 @@ categories:
 
 
 ### server
-```
+``` go
 package main
 
 import (
@@ -95,7 +95,7 @@ func handle(conn net.Conn) {
 ```
 
 ### client
-```
+``` go
 package main
 
 import (
