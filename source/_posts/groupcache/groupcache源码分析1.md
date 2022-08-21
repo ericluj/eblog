@@ -11,7 +11,7 @@ consistenthash.go文件主要是提供一个Map数据结构，它基于一致性
 
 <!-- more -->
 
-### 一致性哈希算法
+# 一致性哈希算法
 参考文章：[https://www.cnblogs.com/cloudgeek/p/9427036.html](https://www.cnblogs.com/cloudgeek/p/9427036.html)
 
 假设我们有三台机器，有一个key需要缓存到其中一台上，我们可以通过hash(key)%N的方式来取余，这样结果必定是其中的一台机器。
@@ -22,7 +22,7 @@ consistenthash.go文件主要是提供一个Map数据结构，它基于一致性
 
 于是，我们引入虚拟结点的概念，将hash(机器+num)与机器做关联，通过缓存->虚拟结点->结点的形式进行绑定，增加了数据分配的平衡性。
 
-### 代码分析
+# 代码分析
 1. Hash定义了一个函数类型，接受[]byte返回uint32，他表示我们选择哈希运算方法类型。
 ``` go
 type Hash func(data []byte) uint32

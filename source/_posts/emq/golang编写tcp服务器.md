@@ -11,7 +11,7 @@ categories:
 
 <!-- more -->
 
-## server
+# server
 
 golang中提供了net包，我们可以用它来编写一个tcp服务。
 可以通过net.Listen方法来创建一个地址的监听，返回一个listener。
@@ -118,7 +118,7 @@ func handle(conn net.Conn) {
 
 ```
 
-## client
+# client
 
 客户端可以使用 dialer.Dial方法来对server进行连接，方法的返回值也是一个net.Conn结构体，具体使用与server没有区别。
 ``` go
