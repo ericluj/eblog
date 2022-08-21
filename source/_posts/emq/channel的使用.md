@@ -180,6 +180,7 @@ func Loop2(close chan int) {
 上面代码两个Loop方法各输出5次后将不会再输出，因为读取到close信号，Loop方法执行了return。这里有一个细节需要注意的是，如果将return换为break，那么Loop方法不会结束，因为break只会退出select，不执行case往下的语句，并无法退出for循环。
 
 ## 定时器
+time.NewTicker返回ticker，然后使用ticker.C来定时执行。
 ``` go
 package main
 
@@ -190,10 +191,10 @@ import (
 
 func main() {
 	f := "2006-01-02 15:04:05"
-	ticker := time.Tick(2 * time.Second)
+	ticker := time.NewTicker(2 * time.Second)
 	for {
 		select {
-		case <-ticker:
+		case <-ticker.C:
 			fmt.Println(time.Now().Format(f))
 		}
 	}
