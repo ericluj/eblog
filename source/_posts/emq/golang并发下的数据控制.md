@@ -11,7 +11,7 @@ golang并发下的数据控制，主要使用lock和atomic。
 
 <!-- more -->
 
-## 一般情况
+# 一般情况
 其实笔者在最开始没有并发编程经验的时候，常常会有一个疑问：为什么并发编程需要加锁？
 我们先来看一个例子
 ``` go
@@ -42,7 +42,7 @@ func main() {
 
 想一想的话其实不难理解，因为使用了goroutine，所以多个goroutine同时对num进行加1，可能协程a和协程b执行时候拿到的值相同（假如都是50），协程a和b各自加1都为51，所以他们俩的操作重复赋值。虽然进行了两次操作但是结果只增加了1。
 
-## lock
+# lock
 golang提供了sync.Mutex，我们可以用它来进行Lock，这样多个goroutine同时执行的时候会去抢锁，只有获取到锁的那个goroutine才能往下执行，没有获取到锁的goroutine会被阻塞，直到获取到锁。这样就能够保证num同一时间是会被一个goroutine来进行操作，为此我们改写代码，它的执行结果会一直是10000。
 ``` go
 package main
@@ -72,9 +72,8 @@ func main() {
 虽然sync.Mutex为我们保证了变量的正确操作，但如果是读多写少的场景，多个同时读的goroutine也会阻塞等待。这个时候我们可以使用sync.RWMutex，它为我们提供了读锁RLock()和写锁Lock()。读锁可以被多个goroutine同时获取到，而写锁则必须等待读锁全部释放才能获取。
 
 # atomic
-## int64
 golang为我们提供了一个atomic包，我们可以使用它来进行原子操作。这样我们不需要加锁的情况下，就能保证并发编程中不会有变量的冲突了。
-
+## int64
 使用atomic.AddInt64来进行加减，第一个参数传入num的指针。当我们获取num的值，可以使用atomic.LoadInt64。
 
 ``` go
